@@ -27,6 +27,8 @@ phases:
             image: "danielvifal/docker-chromium-rec:latest"
             name: headless-browser called
             parameters:
+              - key: WEB
+                value: 'https://rooms.quobis.com'
 	      - key: CALLED
                 value: 'quobisqa1@quobis'
 	      - key: PASSWORD
