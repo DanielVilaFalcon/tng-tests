@@ -29,29 +29,29 @@ phases:
             parameters:
               - key: WEB
                 value: 'https://rooms.quobis.com'
-	      - key: CALLED
+              - key: CALLED
                 value: 'quobisqa1@quobis'
-	      - key: PASSWORD
+              - key: PASSWORD
                 value: 'PNrdj3G948WP'
-	      - key: USER
+              - key: USER
                 value: 'apps'
-	  
-	  - id: headless-browser caller
+
+          - id: headless-browser caller
             description: "Headless browser caller with Puppeteer"
             image: "danielvifal/docker-chromium:latest"
             name: headless-browser caller
             parameters:
               - key: WEB
                 value: 'https://rooms.quobis.com'
-	      - key: CALLER
+              - key: CALLER
                 value: 'quobisqa3@quobis'
-	      - key: PASSWORD
+              - key: PASSWORD
                 value: 'oWc0n2M84xt2'
-	      - key: CALLED
+              - key: CALLED
                 value: 'quobisqa1'
-	      - key: DURATION
+              - key: DURATION
                 value: '10000'
-	      - key: USER
+              - key: USER
                 value: 'apps'
   - id: exercise
     steps:
