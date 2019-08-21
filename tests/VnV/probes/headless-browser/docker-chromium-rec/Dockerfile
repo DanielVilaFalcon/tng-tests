@@ -1,7 +1,7 @@
 # Build the image (Local):
 # docker build -t docker-chromium-rec .
 # Run the image:
-# docker run -e WEB="https://rooms.quobis.com" -e CALLED="quobisqa1@quobis" -e PASSWORD="PNrdj3G948WP" -e USER="apps" --privileged docker-chromium-rec
+# docker run -e WEB="https://rooms.quobis.com" -e CALLED="quobisqa1@quobis" -e PASSWORD="PNrdj3G948WP" -e USER="apps" docker-chromium-rec
 
 
 # Dockerfile
@@ -29,10 +29,13 @@ ADD package.json package-lock.json /
 RUN npm install
 
 # Application specific run commands
-COPY app.js /
 VOLUME /home/apps
 
-EXPOSE 4000
+COPY app.js /
+COPY entrypoint.sh /
 
-USER apps
-CMD ["node", "app.js"]
+
+RUN ["chmod", "777", "/entrypoint.sh"]
+
+
+ENTRYPOINT ["/entrypoint.sh"]

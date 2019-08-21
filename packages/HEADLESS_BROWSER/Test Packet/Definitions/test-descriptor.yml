@@ -1,6 +1,6 @@
 ---
 author: "Santiago Rodriguez (Optare Solutions)"
-description: "Generic Probes Test"
+description: "Headless Test"
 descriptor_schema: https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/test-descriptor/testdescriptor-schema.yml
 name: "comm-pilot-test"
 vendor: "eu.5gtango"
@@ -22,10 +22,24 @@ phases:
         description: "Configuration"
         name: configuration
         probes:
-          - id: headless-browser
-            description: "Headless browser with Puppeteer"
-            image: "sonatanfv/tng-vnv-probe-ping:latest"
-            name: headless-browser
+          - id: headless-browser called
+            description: "Headless browser called with Puppeteer"
+            image: "danielvifal/docker-chromium-rec:latest"
+            name: headless-browser called
+            parameters:
+              - key: WEB
+                value: 'https://rooms.quobis.com'
+	      - key: CALLED
+                value: 'quobisqa1@quobis'
+	      - key: PASSWORD
+                value: 'PNrdj3G948WP'
+	      - key: USER
+                value: 'apps'
+	  
+	  - id: headless-browser caller
+            description: "Headless browser caller with Puppeteer"
+            image: "danielvifal/docker-chromium:latest"
+            name: headless-browser caller
             parameters:
               - key: WEB
                 value: 'https://rooms.quobis.com'
@@ -44,21 +58,32 @@ phases:
       - command: /bin/sh
         dependencies: []
         description: "Starting the initiator"
-        entrypoint: /app/entrypoint.sh
+        entrypoint: /entrypoint.sh
         index: 1
         instances: 1
-        name: ping
+        name: headless-browser called
         output:
           - {results: results.log}
-        run: ping
+        run: headless-browser called
+      - command: /bin/sh
+        dependencies: []
+        description: "Starting the initiator"
+        entrypoint: /entrypoint.sh
+        index: 1
+        instances: 1
+        name: headless-browser caller
+        output:
+          - {results: results.log}
+        run: headless-browser caller
+
   - id: verification
     steps:
-      - step: ping
+      - step: headless
         description: "Check obtained results"
-        name: ping
+        name: headless-browser caller
         conditions:
-          - condition: not present
+          - condition: present
             file: results.log
-            find: rtt min/avg/max/mdev
-            name: ping-ok
+            find: PUPPETEER LOGS
+            name: headless-ok
             verdict: pass

@@ -1,7 +1,7 @@
 # Build the image (Local):
 # docker build -t docker-chromium .
 # Run the image:
-# docker run -e WEB="https://rooms.quobis.com" -e CALLER="quobisqa3@quobis" -e PASSWORD="oWc0n2M84xt2" -e CALLED="quobisqa1" -e DURATION=10000 -e USER="apps" --privileged docker-chromium
+# docker run -e WEB="https://rooms.quobis.com" -e CALLER="quobisqa3@quobis" -e PASSWORD="oWc0n2M84xt2" -e CALLED="quobisqa1" -e DURATION=10000 -e USER="apps" docker-chromium
 
 
 
