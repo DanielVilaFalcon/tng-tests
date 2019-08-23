@@ -34,20 +34,32 @@ RUN npm install
 RUN apt-get update \
     && apt-get install -y tcpdump
 
+RUN apt-get update \
+    && apt-get install -y tshark
+
+RUN apt-get update \
+    && apt-get -y install sudo
+
 RUN mv /usr/sbin/tcpdump /usr/bin/tcpdump
 
-ENV PROBE "headless"
+
+RUN apt-get update && \
+    apt-get install -y wireshark && \
+    groupadd wireshark && \
+    usermod -aG wireshark root && \
+    setcap 'CAP_NET_RAW+eip CAP_NET_ADMIN+eip' /usr/bin/dumpcap && \
+    chgrp wireshark /usr/bin/dumpcap && \
+    chmod 750 /usr/bin/dumpcap
+
+ENV PROBE "headless-browser-caller"
 ENV WEB ""
 ENV CALLER ""
 ENV PASSWORD ""
 ENV CALLED ""
 ENV DURATION ""
 
-
 EXPOSE 3000
-
 WORKDIR /output/${PROBE}/$HOSTNAME
-VOLUME /output/${PROBE}/$HOSTNAME
 
 COPY app.js /
 COPY config.cfg /

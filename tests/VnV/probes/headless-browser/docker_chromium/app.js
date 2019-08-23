@@ -15,7 +15,6 @@
  */
 
 'use strict';
-
 const puppeteer = require('puppeteer');
 const maxDuration = 90000;
 (async() => {

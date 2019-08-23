@@ -1,5 +1,4 @@
 FROM debian
-LABEL maintainer="Felipe Vicens felipevicens@atos.net, Santiago Rodriguez srodriguez@optaresolutions.com"
 RUN apt-get update && \
     apt-get install -y libssl-dev \
                        && rm -rf /var/lib/apt/lists/*
