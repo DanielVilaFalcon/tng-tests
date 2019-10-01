@@ -15,13 +15,16 @@ echo "User Called: "$CALLED
 echo "Duration: "$DURATION
 echo "Result file: /output/${PROBE}/$HOSTNAME/results.log"
 
-
+echo "$RP_IP  comm-pilot.5gtango.eu" >> "/etc/hosts"
+#echo "10.10.10.134  comm-pilot.5gtango.eu" >> "/etc/hosts"
+echo "$(</etc/hosts)"
 dur=$DURATION
 ringingTime=40000
 
 capturingTime=$((dur+ringingTime))
 capturingTime=$((capturingTime/1000))
-
+sleep 60
+sudo iftop -i any -t -o s2 -L 2 -s $capturingTime -P >> "/res1.log" &
 #tcpdump -i eth0 udp -vv >> "/output/${PROBE}/$HOSTNAME/aux.log" &
 sudo tshark -i any -q -f 'udp portrange 1-65000' -o rtp.heuristic_rtp:TRUE -q -z rtp,streams,stat -a duration:$capturingTime >> "/res.log" &
 
@@ -40,3 +43,5 @@ echo "Result file: /output/${PROBE}/$HOSTNAME/results.log"  >> "/output/${PROBE}
 echo -e " \n"  >> "/output/${PROBE}/$HOSTNAME/results.log"
 echo -e "TSHARK RTP STATS"  >> "/output/${PROBE}/$HOSTNAME/results.log"
 cat "/res.log" >> "/output/${PROBE}/$HOSTNAME/results.log"
+echo -e " \n"  >> "/output/${PROBE}/$HOSTNAME/results.log"
+cat "/res1.log" >> "/output/${PROBE}/$HOSTNAME/results.log"

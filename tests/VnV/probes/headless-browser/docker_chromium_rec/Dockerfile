@@ -1,5 +1,5 @@
 # Build the image (Local):
-# docker build -t docker-chromium-rec .
+# docker build -t docker-chromium-rec-webphone .
 # Run the image:
 # docker run -e WEB="https://rooms.quobis.com" -e CALLED="quobisqa1@quobis" -e PASSWORD="PNrdj3G948WP" -e USER="apps" docker-chromium-rec
 
@@ -30,7 +30,7 @@ RUN npm install
 
 # Application specific run commands
 VOLUME /home/apps
-
+ENV RP_IP ""
 COPY app.js /
 COPY entrypoint.sh /
 

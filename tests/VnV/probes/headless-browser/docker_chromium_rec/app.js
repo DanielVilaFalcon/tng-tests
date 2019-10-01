@@ -28,22 +28,14 @@ var count = 0;
                                                    '--no-sandbox' ]
                                           });
   const page = await browser.newPage();
-  await page.setRequestInterception(true);
-  page.on('request', request => {
-    if (request.resourceType() === 'image')
-      request.abort();
-    else
-      request.continue();
-  });
-  await page.goto(process.env.WEB);
-
+  await page.goto("https://comm-pilot.5gtango.eu/");
   await page.waitFor('input[name="username"]');
-  await page.type('input[name="username"]', process.env.CALLED);
+  await page.type('input[name="username"]',  process.env.CALLED);
   await page.waitFor('input[name="password"]');
   await page.type('input[name="password"]', process.env.PASSWORD);
+  await new Promise(done => setTimeout(done, 1000));
   await page.click('button[id="btn-login"]'); // With type
-
-  await page.click('button[id="btn-login"]');
+  console.log("Listening...")
 
   while (true) {
     try {
@@ -63,7 +55,7 @@ var count = 0;
           console.log("Timeout waiting for incoming call. Listenig to new calls.");
           await new Promise(done => setTimeout(done,5000));
           count=count+1;
-          if (count==7){
+          if (count==10){
             console.log("The user has left to wait for calls.");
             process.exit();
           }

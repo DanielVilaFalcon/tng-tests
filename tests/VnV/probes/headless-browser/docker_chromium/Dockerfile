@@ -1,5 +1,5 @@
 # Build the image (Local):
-# docker build -t docker-chromium .
+# docker build -t docker-chromium-webphone .
 # Run the image:
 # docker run -e WEB="https://rooms.quobis.com" -e CALLER="quobisqa3@quobis" -e PASSWORD="oWc0n2M84xt2" -e CALLED="quobisqa1" -e DURATION=10000 -e USER="apps" docker-chromium
 
@@ -38,6 +38,9 @@ RUN apt-get update \
     && apt-get install -y tshark
 
 RUN apt-get update \
+    && apt-get install -y iftop
+
+RUN apt-get update \
     && apt-get -y install sudo
 
 RUN mv /usr/sbin/tcpdump /usr/bin/tcpdump
@@ -57,6 +60,7 @@ ENV CALLER ""
 ENV PASSWORD ""
 ENV CALLED ""
 ENV DURATION ""
+ENV RP_IP ""
 
 EXPOSE 3000
 WORKDIR /output/${PROBE}/$HOSTNAME

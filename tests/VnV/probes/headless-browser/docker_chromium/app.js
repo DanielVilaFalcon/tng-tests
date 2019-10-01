@@ -25,28 +25,19 @@ const maxDuration = 90000;
                                                    '--unsafely-allow-protected-media-identifier-for-domain',
                                                    '--no-sandbox']
                                           });
+  console.log("Inicio...");
   const page = await browser.newPage();
-  await page.setRequestInterception(true);
-  page.on('request', request => {
-    if (request.resourceType() === 'image')
-      request.abort();
-    else
-      request.continue();
-  });
-  await page.goto(process.env.WEB);
-
+  await page.goto("https://comm-pilot.5gtango.eu/");
   await page.waitFor('input[name="username"]');
   await page.type('input[name="username"]', process.env.CALLER);
   await page.waitFor('input[name="password"]');
   await page.type('input[name="password"]', process.env.PASSWORD);
+  await new Promise(done => setTimeout(done, 1000));
   await page.click('button[id="btn-login"]'); // With type
 
-  await page.click('button[id="btn-login"]');
-
-
-  await page.waitFor('input[class="search ng-untouched ng-pristine ng-valid"]');
-  await page.type('input[class="search ng-untouched ng-pristine ng-valid"]', process.env.CALLED);
-  await page.click('i[class="icon sippo-search"]');
+  console.log("User logged...");
+  await page.waitFor('input[class="search ng-pristine ng-untouched ng-valid ng-empty"]');
+  await page.type('input[class="search ng-pristine ng-untouched ng-valid ng-empty"]',  process.env.CALLED);
   await new Promise(done => setTimeout(done, 2000));
   if (await page.$('span[class="name"]', { timeout: 2000 }) == null){
     console.log("No such user.");
@@ -54,12 +45,11 @@ const maxDuration = 90000;
   }
   await page.waitFor('span[class="name"]');
   await page.click('span[class="name"]');
-  if (await page.$('img[class="offline"]', { timeout: 2000 }) !== null){
-    console.log("Non-logged-in user.");
-    process.exit();
-  }
-  await page.click('span[class="name"]');
 
+  await new Promise(done => setTimeout(done, 2000));
+  await page.waitFor('button[class="btn btn-block btn-success"]');
+  await page.click('button[class="btn btn-block btn-success"]');
+  console.log("Calling...");
   try {
     await new Promise(done => setTimeout(done, 40000));
     if (await page.$('button[class="hang-up"]') !== null){
