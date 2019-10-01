@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot rpa="false" generated="20190927 10:54:29.182" generator="Robot 3.1.2 (Python 2.7.15+ on linux2)">
+<suite source="/home/quobis/tng-tests/tests/SP/test_Simple-Service-Lifecycle-NSCP/test_Simple-Service-Lifecycle-NSCP.robot" id="s1" name="test Simple-Service-Lifecycle-NSCP">
+<test id="s1-t1" name="Setting the SP Path">
+<kw name="Get Current Date" library="DateTime">
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<assign>
+<var>${from_date}</var>
+</assign>
+<msg timestamp="20190927 10:54:29.209" level="INFO">${from_date} = 2019-09-27 10:54:29.209</msg>
+<status status="PASS" endtime="20190927 10:54:29.209" starttime="20190927 10:54:29.209"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${from_date}</arg>
+</arguments>
+<msg timestamp="20190927 10:54:29.209" level="INFO">${from_date} = 2019-09-27 10:54:29.209</msg>
+<status status="PASS" endtime="20190927 10:54:29.210" starttime="20190927 10:54:29.209"></status>
+</kw>
+<kw name="Set SP Path">
+<arguments>
+<arg>${SP_HOST}</arg>
+</arguments>
+<msg timestamp="20190927 10:54:29.212" level="FAIL">No keyword with name 'Set SP Path' found.</msg>
+<status status="FAIL" endtime="20190927 10:54:29.212" starttime="20190927 10:54:29.211"></status>
+</kw>
+<status status="FAIL" endtime="20190927 10:54:29.212" critical="yes" starttime="20190927 10:54:29.208">No keyword with name 'Set SP Path' found.</status>
+</test>
+<test id="s1-t2" name="Create Runtime Policy">
+<kw name="Create Policy">
+<arguments>
+<arg>${POLICIES_SOURCE_DIR}/${POLICY_NAME}</arg>
+</arguments>
+<assign>
+<var>${result} =</var>
+</assign>
+<msg timestamp="20190927 10:54:29.214" level="FAIL">No keyword with name 'Create Policy' found.</msg>
+<status status="FAIL" endtime="20190927 10:54:29.214" starttime="20190927 10:54:29.214"></status>
+</kw>
+<status status="FAIL" endtime="20190927 10:54:29.215" critical="yes" starttime="20190927 10:54:29.212">No keyword with name 'Create Policy' found.</status>
+</test>
+<test id="s1-t3" name="Αctivate Runtime Policy">
+<kw name="Enforce Policy">
+<arguments>
+<arg>${SERVICE_INSTANCE_UUID}</arg>
+<arg>${POLICY_UUID}</arg>
+</arguments>
+<assign>
+<var>${result} =</var>
+</assign>
+<msg timestamp="20190927 10:54:29.217" level="FAIL">No keyword with name 'Enforce Policy' found.</msg>
+<status status="FAIL" endtime="20190927 10:54:29.217" starttime="20190927 10:54:29.217"></status>
+</kw>
+<status status="FAIL" endtime="20190927 10:54:29.217" critical="yes" starttime="20190927 10:54:29.215">No keyword with name 'Enforce Policy' found.</status>
+</test>
+<test id="s1-t4" name="Wait for monitoring rules satisfaction">
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>100s</arg>
+</arguments>
+<status status="FAIL" endtime="20190927 10:54:40.380" starttime="20190927 10:54:29.218"></status>
+</kw>
+<status status="FAIL" endtime="20190927 10:54:40.381" critical="yes" starttime="20190927 10:54:29.217">Execution terminated by signal</status>
+</test>
+<test id="s1-t5" name="Check that scaling action has been triggered by the policy manager">
+<tags>
+<tag>robot:exit</tag>
+</tags>
+<status status="FAIL" endtime="20190927 10:54:40.383" critical="yes" starttime="20190927 10:54:40.381">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t6" name="Deactivate Runtime Policy">
+<tags>
+<tag>robot:exit</tag>
+</tags>
+<status status="FAIL" endtime="20190927 10:54:40.384" critical="yes" starttime="20190927 10:54:40.383">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t7" name="Wait for Mano execution of elasticity action">
+<tags>
+<tag>robot:exit</tag>
+</tags>
+<status status="FAIL" endtime="20190927 10:54:40.386" critical="yes" starttime="20190927 10:54:40.385">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t8" name="Check that Mano has succesfully scaled out requested vnf">
+<tags>
+<tag>robot:exit</tag>
+</tags>
+<status status="FAIL" endtime="20190927 10:54:40.387" critical="yes" starttime="20190927 10:54:40.386">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t9" name="Delete Runtime Policy">
+<tags>
+<tag>robot:exit</tag>
+</tags>
+<status status="FAIL" endtime="20190927 10:54:40.388" critical="yes" starttime="20190927 10:54:40.388">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t10" name="Obtain GrayLogs">
+<tags>
+<tag>robot:exit</tag>
+</tags>
+<status status="FAIL" endtime="20190927 10:54:40.389" critical="yes" starttime="20190927 10:54:40.388">Test execution stopped due to a fatal error.</status>
+</test>
+<doc>Test suite template for deploy and undeploy with elasticity policy enforcement at Opestack</doc>
+<status status="FAIL" endtime="20190927 10:54:40.389" starttime="20190927 10:54:29.183"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="10" pass="0">Critical Tests</stat>
+<stat fail="10" pass="0">All Tests</stat>
+</total>
+<tag>
+<stat info="combined" fail="4" combined="NOT robot:exit" pass="0">NOT robot:exit</stat>
+<stat fail="6" pass="0">robot:exit</stat>
+</tag>
+<suite>
+<stat fail="10" id="s1" name="test Simple-Service-Lifecycle-NSCP" pass="0">test Simple-Service-Lifecycle-NSCP</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20190927 10:54:29.199" level="ERROR">Error in file '/home/quobis/tng-tests/tests/SP/test_Simple-Service-Lifecycle-NSCP/test_Simple-Service-Lifecycle-NSCP.robot': Importing test library 'tnglib' failed: ImportError: No module named tnglib
+Traceback (most recent call last):
+  None
+PYTHONPATH:
+  /usr/local/bin
+  /usr/lib/python2.7
+  /usr/lib/python2.7/plat-x86_64-linux-gnu
+  /usr/lib/python2.7/lib-tk
+  /usr/lib/python2.7/lib-old
+  /usr/lib/python2.7/lib-dynload
+  /home/quobis/.local/lib/python2.7/site-packages
+  /usr/local/lib/python2.7/dist-packages
+  /home/quobis/flask-restful
+  /usr/lib/python2.7/dist-packages</msg>
+</errors>
+</robot>

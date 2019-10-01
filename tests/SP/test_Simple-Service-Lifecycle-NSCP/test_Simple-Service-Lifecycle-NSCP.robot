@@ -11,7 +11,7 @@ ${POLICIES_SOURCE_DIR}   ./policies   # to be modified and added accordingly if 
 ${POLICY_NAME}           comm-pilot-Elasticity-Policy-Basic.json    # The policy to be uploaded and tested
 ${READY}       READY
 ${PASSED}      PASSED
-${SERVICE_INSTANCE_UUID}  5fc4891f-cb2d-4cc6-b281-abda4b6a1d16
+${SERVICE_INSTANCE_UUID}  60d0c3f0-b966-4942-8c34-84958316a52a
 
 *** Test Cases ***
 Setting the SP Path
@@ -25,9 +25,9 @@ Create Runtime Policy
     ${result} =     Create Policy      ${POLICIES_SOURCE_DIR}/${POLICY_NAME}
     Should Be True     ${result[0]}
     Set Suite Variable     ${POLICY_UUID}  ${result[1]}
-    Should Be True     ${result[0]} 
+    Should Be True     ${result[0]}
 Αctivate Runtime Policy
-    ${result} =     Enforce Policy      ${SERVICE_INSTANCE_UUID}   ${POLICY_UUID} 
+    ${result} =     Enforce Policy      ${SERVICE_INSTANCE_UUID}   ${POLICY_UUID}
     Should Be True     ${result[0]}
 Wait for monitoring rules satisfaction
     Sleep   100s

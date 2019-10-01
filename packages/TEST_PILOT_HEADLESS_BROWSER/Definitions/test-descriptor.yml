@@ -1,9 +1,9 @@
 ---
-author: "Santiago Rodriguez (Optare Solutions)"
+author: "Daniel Vila (Quobis)"
 description: "Headless Test"
 descriptor_schema: https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/test-descriptor/testdescriptor-schema.yml
 name: "comm-pilot-test"
-vendor: "eu.5gtango"
+vendor: "quobis"
 version: '0.1'
 
 service_platforms:
@@ -22,37 +22,41 @@ phases:
         description: "Configuration"
         name: configuration
         probes:
-          - id: headless-browser called
+          - id: headless-browser-called
             description: "Headless browser called with Puppeteer"
-            image: "danielvifal/docker-chromium-rec:latest"
-            name: headless-browser called
+            image: "danielvifal/docker-chromium-rec-webphone:latest"
+            name: headless-browser-called
             parameters:
               - key: WEB
-                value: 'https://rooms.quobis.com'
+                value: 'https://comm-pilot.5gtango.eu'
               - key: CALLED
-                value: 'quobisqa1@quobis'
+                value: '5gtango1'
               - key: PASSWORD
-                value: 'PNrdj3G948WP'
+                value: '5gtango1'
               - key: USER
                 value: 'apps'
+              - key: RP_IP
+                value: '$(rp-vnf/endpoints/id:mgmt/address)'
 
-          - id: headless-browser caller
+          - id: headless-browser-caller
             description: "Headless browser caller with Puppeteer"
-            image: "danielvifal/docker-chromium:latest"
-            name: headless-browser caller
+            image: "danielvifal/docker-chromium-webphone:latest"
+            name: headless-browser-caller
             parameters:
               - key: WEB
-                value: 'https://rooms.quobis.com'
+                value: 'https://comm-pilot.5gtango.eu'
               - key: CALLER
-                value: 'quobisqa3@quobis'
+                value: '5gtango2'
               - key: PASSWORD
-                value: 'oWc0n2M84xt2'
+                value: '5gtango2'
               - key: CALLED
-                value: 'quobisqa1'
+                value: '5gtango1'
               - key: DURATION
-                value: '10000'
+                value: '80000'
               - key: USER
                 value: 'apps'
+              - key: RP_IP
+                value: '$(rp-vnf/endpoints/id:mgmt/address)'
   - id: exercise
     steps:
       - command: /bin/sh
@@ -61,29 +65,29 @@ phases:
         entrypoint: /entrypoint.sh
         index: 1
         instances: 1
-        name: headless-browser called
+        name: headless-browser-called
         output:
           - {results: results.log}
-        run: headless-browser called
+        run: headless-browser-called
       - command: /bin/sh
         dependencies: []
         description: "Starting the initiator"
         entrypoint: /entrypoint.sh
         index: 1
         instances: 1
-        name: headless-browser caller
+        name: headless-browser-caller
         output:
           - {results: results.log}
-        run: headless-browser caller
+        run: headless-browser-caller
 
   - id: verification
     steps:
       - step: headless
         description: "Check obtained results"
-        name: headless-browser caller
+        name: headless-browser-caller
         conditions:
           - condition: present
             file: results.log
-            find: PUPPETEER LOGS
+            find: Call finished successfully
             name: headless-ok
             verdict: pass

@@ -1,0 +1,54 @@
+---
+author: "Santiago Rodriguez (Optare Solutions)"
+description: "Getting the time needed to instanciate the NS"
+descriptor_schema: https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/test-descriptor/testdescriptor-schema.yml
+name: "comm-pilot-test-time-instanciate"
+vendor: "eu.5gtango.optare"
+version: '0.1'
+
+service_platforms:
+  - "OSM"
+  - "SONATA"
+test_category:
+  - "basic-tests"
+
+phases:
+  - id: setup
+    steps:
+      - action: deploy
+        description: "Deploying a NS"
+        name: deployment
+      - action: configure
+        description: "Configuration"
+        name: configuration
+        probes:
+          - id: timeNS
+            description: "Time needed to instanciate NS"
+            image: "danielvifal/timeinstanciatens:latest"
+            name: timeNS
+            parameters:
+              - key: RESULT_UUID
+                value: '43b173d0-1f57-4f71-aa39-74e8e7860e63'
+  - id: exercise
+    steps:
+      - command: /bin/sh
+        dependencies: []
+        description: "Starting the initiator"
+        entrypoint: /entrypoint.sh
+        index: 1
+        instances: 1
+        name: timeNS
+        output:
+          - {results: results.log}
+        run: timeNS
+  - id: verification
+    steps:
+      - step: timeNS
+        description: "Check obtained results"
+        name: timeNS
+        conditions:
+          - condition: present
+            file: results.log
+            find: service_instantiation_time
+            name: result-ok
+            verdict: pass
