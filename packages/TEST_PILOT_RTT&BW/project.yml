@@ -3,9 +3,9 @@ descriptor_extension: yml
 version: '0.5'
 package:
   vendor: "quobis"
-  name: "comm-pilot-test-time-instanciate"
+  name: "comm-pilot-test"
   version: "0.1"
-  maintainer: "Daniel Vila (Quobis)"
+  maintainer: "Daniel Vila, Quobis"
   description: "This is a 5GTANGO test package for test probes"
 files:
   - path: "Definitions/test-descriptor.yml"

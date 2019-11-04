@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<test>
+  <author>Daniel Vila Falcon</author>
+  <name>Throughput test</name>
+  <description>Create several calls to measure the service performance </description>
+  <vendor>Quobis</vendor>
+  <version>0.1</version>
+
+  <task name="One">
+    <from>8:19</from>
+    <duration>240000</duration>
+    <numCalls>3</numCalls>
+  </task>
+  <task name="Two">
+    <from>8:21</from>
+    <duration>180000</duration>
+    <numCalls>5</numCalls>
+  </task>
+  <!--<task name="Three">
+    <from>15:25</from>
+    <duration>240000</duration>
+    <numCalls>4</numCalls>
+  </task>
+  <task name="Four">
+    <from>15:30</from>
+    <duration>180000</duration>
+    <numCalls>3</numCalls>
+  </task>
+  <task name="Five">
+    <from>15:31</from>
+    <duration>120000</duration>
+    <numCalls>6</numCalls>
+  </task> -->
+
+</test>

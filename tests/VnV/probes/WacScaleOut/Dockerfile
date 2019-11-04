@@ -29,14 +29,19 @@ RUN cd /home/sampleTest/tng-cli \
 RUN cd /home/sampleTest/tng-cli \
     && pip3 install tngcli
 
-ENV PROBE "timeNS"
-ENV RESULT_UUID ""
+ENV PROBE "wacScaleOut"
+ENV SESSIONS ""
+ENV RP_IP ""
 WORKDIR /output/${PROBE}/$HOSTNAME
+WORKDIR /
 
 COPY entrypoint.sh /
-COPY config.cfg /
+COPY snmpWacAPI.py /
 COPY parser.py /
-RUN ["chmod", "777", "/parser.py"]
+COPY config.cfg /
 RUN ["chmod", "777", "/entrypoint.sh"]
 RUN ["chmod", "777", "/config.cfg"]
+RUN ["chmod", "777", "/snmpWacAPI.py"]
+RUN ["chmod", "777", "/parser.py"]
+
 ENTRYPOINT [ "/entrypoint.sh" ]

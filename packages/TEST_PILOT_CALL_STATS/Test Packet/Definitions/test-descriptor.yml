@@ -1,9 +1,9 @@
 ---
-author: "Santiago Rodriguez (Optare Solutions)"
-description: "Getting the time needed to instanciate the NS"
+author: "Daniel Vila (Quobis)"
+description: "Headless Stats Test"
 descriptor_schema: https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/test-descriptor/testdescriptor-schema.yml
-name: "test-time_NS"
-vendor: "eu.5gtango.optare"
+name: "comm-pilot-test"
+vendor: "quobis"
 version: '0.1'
 
 service_platforms:
@@ -22,33 +22,41 @@ phases:
         description: "Configuration"
         name: configuration
         probes:
-          - id: time_NS
-            description: "Time needed to instanciate NS"
-            image: "danielvifal/timeinstanciatens:latest"
-            name: time_NS
+          - id: stats
+            description: "Headless browser call stats with Puppeteer"
+            image: "danielvifal/webphone-stats:latest"
+            name: stats
             parameters:
-              - key: RESULT_UUID
-                value: '43b173d0-1f57-4f71-aa39-74e8e7860e63'
+              - key: WEB
+                value: 'https://comm-pilot.5gtango.eu'
+              - key: USER
+                value: 'apps'
+              - key: RP_IP
+                value: '$(rp-vnf/endpoints/id:mgmt/address)'
+              - key: MS_IP
+                value: '$(ms-vnf/endpoints/id:mgmt/address)'
+
   - id: exercise
     steps:
       - command: /bin/sh
         dependencies: []
         description: "Starting the initiator"
-        entrypoint: /app/entrypoint.sh
+        entrypoint: /entrypoint.sh
         index: 1
         instances: 1
-        name: time_NS
+        name: stats
         output:
           - {results: results.log}
-        run: time_NS
+        run: stats
+
   - id: verification
     steps:
-      - step: time_NS
+      - step: stats
         description: "Check obtained results"
-        name: time_NS
+        name: stats
         conditions:
           - condition: present
             file: results.log
-            find: service_instantiation_time
-            name: result-ok
+            find: TEST PASSED
+            name: headless-ok
             verdict: pass

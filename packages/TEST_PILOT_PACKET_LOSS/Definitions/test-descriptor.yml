@@ -1,8 +1,8 @@
 ---
 author: "Daniel Vila (Quobis)"
-description: "Getting the time needed to instanciate the NS"
+description: "Generic Probes Test"
 descriptor_schema: https://raw.githubusercontent.com/sonata-nfv/tng-schema/master/test-descriptor/testdescriptor-schema.yml
-name: "comm-pilot-test-time-instanciate"
+name: "packet-loss-comm-pilot-test"
 vendor: "quobis"
 version: '0.1'
 
@@ -22,13 +22,13 @@ phases:
         description: "Configuration"
         name: configuration
         probes:
-          - id: timeNS
-            description: "Time needed to instanciate NS"
-            image: "danielvifal/timeinstantiatens:latest"
-            name: timeNS
+          - id: packetLoss
+            description: "Packet loss"
+            image: "danielvifal/packet_loss:latest"
+            name: packetLoss
             parameters:
-              - key: RESULT_UUID
-                value: '43b173d0-1f57-4f71-aa39-74e8e7860e63'
+              - key: MS_IP
+                value: '$(ms-vnf/endpoints/id:mgmt/address)'
   - id: exercise
     steps:
       - command: /bin/sh
@@ -37,18 +37,18 @@ phases:
         entrypoint: /entrypoint.sh
         index: 1
         instances: 1
-        name: timeNS
+        name: packetLoss
         output:
           - {results: results.log}
-        run: timeNS
+        run: packetLoss
   - id: verification
     steps:
-      - step: timeNS
+      - step: packetLoss
         description: "Check obtained results"
-        name: timeNS
+        name: packetLoss
         conditions:
           - condition: present
             file: results.log
             find: TEST PASSED
-            name: result-ok
+            name: ping-ok
             verdict: pass
