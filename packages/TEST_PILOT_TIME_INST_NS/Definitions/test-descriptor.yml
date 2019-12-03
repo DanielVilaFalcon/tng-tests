@@ -28,7 +28,7 @@ phases:
             name: timeNS
             parameters:
               - key: RESULT_UUID
-                value: '43b173d0-1f57-4f71-aa39-74e8e7860e63'
+                value: '61179620-7ef4-4e51-b56e-40d295234794'
   - id: exercise
     steps:
       - command: /bin/sh
