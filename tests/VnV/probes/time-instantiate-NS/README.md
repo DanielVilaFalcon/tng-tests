@@ -1,6 +1,6 @@
 # Ping Probe
 
-This probe executes a tng-cli request with the purpose if obtaining the time needed to instantiate a NS.
+This probe executes a tng-cli request with the purpose of obtaining the time needed to instantiate a NS.
 
 
 | Parameter | Mandatory |
